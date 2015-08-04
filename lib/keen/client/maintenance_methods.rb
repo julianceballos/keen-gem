@@ -20,7 +20,9 @@ module Keen
               :path => [api_event_collection_resource_path(event_collection), query_params].compact.join('?'),
               :headers => api_headers(self.master_key, "sync"))
         rescue Exception => http_error
-          raise HttpError.new("Couldn't perform delete of #{event_collection} on Keen IO: #{http_error.message}", http_error)
+          puts "Couldn't perform delete of #{event_collection} on Keen IO: #{http_error.message}"
+          return
+          #raise HttpError.new("Couldn't perform delete of #{event_collection} on Keen IO: #{http_error.message}", http_error)
         end
 
         response_body = response.body ? response.body.chomp : ''
