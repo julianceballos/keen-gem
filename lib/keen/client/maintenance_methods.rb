@@ -21,12 +21,13 @@ module Keen
               :headers => api_headers(self.master_key, "sync"))
         rescue Exception => http_error
           puts "Couldn't perform delete of #{event_collection} on Keen IO: #{http_error.message}"
-          return
+          return false
           #raise HttpError.new("Couldn't perform delete of #{event_collection} on Keen IO: #{http_error.message}", http_error)
         end
 
         response_body = response.body ? response.body.chomp : ''
         process_response(response.code, response_body)
+        return true
       end
 
       # Return list of collections for the configured project
